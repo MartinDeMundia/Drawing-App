@@ -18,7 +18,7 @@ const Main = () => {
 
   const [newshape, setNewshape] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [inputValue, setInputValue] = useState('');
+
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
   const [selectedColor, setSelectedColor] = useState('black');
@@ -63,10 +63,7 @@ const handleInputChange = (event) => {
   });
   setIsEdit(false);
   setIndex(null);  
- }
-
-
-    setInputValue('');
+ }  
     handleCloseModal();
   };
 

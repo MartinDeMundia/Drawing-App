@@ -8,11 +8,11 @@ const Circle = ({ dimensions, onResize , onDelete  }) => (
         position: 'relative',
       }}
       onMouseDown={(e) => {
-        const startX = e.clientX;
-        const startY = e.clientY;
+        //const startX = e.clientX;
+        //const startY = e.clientY;
   
         const handleMouseMove = (e) => {
-          const newDiameter = Math.max(dimensions.width + e.clientX - startX, dimensions.height + e.clientY - startY);
+          //const newDiameter = Math.max(dimensions.width + e.clientX - startX, dimensions.height + e.clientY - startY);
           //onResize({ width: newDiameter, height: newDiameter });
         };
   
@@ -26,7 +26,7 @@ const Circle = ({ dimensions, onResize , onDelete  }) => (
       }}
     >
     <span onClick={onDelete} style={{ cursor: 'pointer', position: 'absolute', top: '2px', right: '2px', color: 'white',zIndex:"2000" }}>
-      <img src="delete.png" style={{width:"20px",height:"20px"}}></img>
+      <img alt="Delete" src="delete.png" style={{width:"20px",height:"20px"}}></img>
     </span>
     </div>
   );

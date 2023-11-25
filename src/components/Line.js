@@ -42,7 +42,7 @@ const Line = ({ dimensions, onResize , onDelete  }) => (
       }}
     ></div>
       <span onClick={onDelete} style={{ cursor: 'pointer', position: 'absolute', top: '-12px', right: '0px', color: 'white',zIndex:"2000" }}>
-      <img src="delete.png" style={{width:"20px",height:"20px"}}></img>
+      <img alt="Delete" src="delete.png" style={{width:"20px",height:"20px"}}></img>
     </span>
   </div>
 );
