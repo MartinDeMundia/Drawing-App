@@ -1,4 +1,8 @@
-# Running the application
+# About
+
+Drawing App is an app created using react JS to allow creation, editing of shapes dynamically
+
+## Running the application
 
 This is a front-end implementation created using React JS
 
