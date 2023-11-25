@@ -1,0 +1,147 @@
+import React, { useState } from 'react';
+import Draggable from 'react-draggable';
+
+const Main = () => {
+  const [shapes, setShapes] = useState([]);
+  const [selectedShape, setSelectedShape] = useState(null);
+
+  const addShape = (shapeType) => {
+    setShapes([...shapes, { type: shapeType, id: Date.now(), dimensions: { width: 50, height: 30 } }]);
+  };
+
+  const handleDrag = (index, newPosition) => {
+    setShapes((prevShapes) => {
+      const updatedShapes = [...prevShapes];
+      updatedShapes[index].position = newPosition;
+      return updatedShapes;
+    });
+  };
+
+  const handleResize = (index, dimensions) => {
+    setShapes((prevShapes) => {
+      const updatedShapes = [...prevShapes];
+      updatedShapes[index].dimensions = dimensions;
+      return updatedShapes;
+    });
+  };
+
+  const deleteShape = (index) => {
+    setShapes((prevShapes) => {
+      const updatedShapes = [...prevShapes];
+      updatedShapes.splice(index, 1);
+      return updatedShapes;
+    });
+  };
+
+  const selectShape = (index) => {
+    setSelectedShape(index);
+  };
+
+  const renderShapes = () => {
+    return shapes.map((shape, index) => {
+      const { type, id, position, dimensions } = shape;
+      const ShapeComponent = shapeComponents[type];
+
+      return (
+        <Draggable key={id} onDrag={(e, data) => handleDrag(index, data)}>
+          <div
+            style={{
+              position: 'absolute',
+              ...position,
+              border: selectedShape === index ? '2px solid red' : 'none', // Highlight the selected shape
+            }}
+            onClick={() => selectShape(index)} // Set the selected shape on click
+          >
+            <ShapeComponent
+              dimensions={dimensions}
+              onResize={(newDimensions) => handleResize(index, newDimensions)}
+              onDelete={() => deleteShape(index)}
+            />
+          </div>
+        </Draggable>
+      );
+    });
+  };
+
+  return (
+    <div>
+      <button onClick={() => addShape('Rectangle')}>Add Rectangle</button>
+      <button onClick={() => addShape('Circle')}>Add Circle</button>
+      <button onClick={() => addShape('Line')}>Add Line</button>
+      <button onClick={() => addShape('Triangle')}>Add Triangle</button>
+      <div style={{ position: 'relative', width: '500px', height: '500px', border: '1px solid black' }}>
+        {renderShapes()}
+      </div>
+    </div>
+  );
+};
+
+const Rectangle = ({ dimensions, onResize, onDelete }) => (
+  <div
+    style={{
+      width: dimensions.width + 'px',
+      height: dimensions.height + 'px',
+      background: 'blue',
+    }}
+  >
+    <span onClick={onDelete} style={{ cursor: 'pointer', position: 'absolute', top: '2px', right: '2px', color: 'white' }}>
+      X
+    </span>
+  </div>
+);
+
+const Circle = ({ dimensions, onResize, onDelete }) => (
+  <div
+    style={{
+      width: dimensions.width + 'px',
+      height: dimensions.height + 'px',
+      borderRadius: '50%',
+      background: 'red',
+    }}
+  >
+    <span onClick={onDelete} style={{ cursor: 'pointer', position: 'absolute', top: '2px', right: '2px', color: 'white' }}>
+      X
+    </span>
+  </div>
+);
+
+const Line = ({ dimensions, onResize, onDelete }) => (
+  <div
+    style={{
+      width: dimensions.width + 'px',
+      height: '2px',
+      background: 'black',
+      position: 'relative',
+    }}
+  >
+    <span onClick={onDelete} style={{ cursor: 'pointer', position: 'absolute', top: '2px', right: '2px', color: 'white' }}>
+      X
+    </span>
+  </div>
+);
+
+const Triangle = ({ dimensions, onResize, onDelete }) => (
+  <div
+    style={{
+      width: '0',
+      height: '0',
+      borderLeft: `${dimensions.width / 2}px solid transparent`,
+      borderRight: `${dimensions.width / 2}px solid transparent`,
+      borderBottom: `${dimensions.height}px solid green`,
+      position: 'relative',
+    }}
+  >
+    <span onClick={onDelete} style={{ cursor: 'pointer', position: 'absolute', top: '2px', right: '2px', color: 'white' }}>
+      X
+    </span>
+  </div>
+);
+
+const shapeComponents = {
+  Rectangle,
+  Circle,
+  Line,
+  Triangle,
+};
+
+export default Main;
